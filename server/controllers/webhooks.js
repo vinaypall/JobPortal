@@ -63,8 +63,15 @@ async function handleUserDeleted(data) {
 
 const clerkWebhooks = async (req, res) => {
   console.log("Clerk webhook handler initiated...");
+  
+  // Add a check to ensure the body parser is configured correctly.
+  if (typeof req.body !== 'string' && !Buffer.isBuffer(req.body)) {
+      const errorMessage = "Webhook body is a parsed JSON object, but a raw body is required. Ensure the 'express.raw' middleware is correctly applied to this route in your main server file (server.js) BEFORE the global 'express.json()' middleware.";
+      console.error(errorMessage);
+      return res.status(400).json({ success: false, message: errorMessage });
+  }
+
   try {
-    // DEBUGGING STEP: Log all incoming headers to diagnose the "Missing required headers" error.
     console.log("Incoming Headers:", JSON.stringify(req.headers, null, 2));
 
     const payload = req.body;
@@ -114,3 +121,4 @@ const clerkWebhooks = async (req, res) => {
 };
 
 export default clerkWebhooks;
+
