@@ -53,7 +53,7 @@ const clerkWebhooks = async (req, res) => {
     }
   } catch (error) {
     console.log(error.message);
-    res.json({ sucess: false, message: "Webhook " });
+    res.json({ sucess: false, message: "Webhook successfull" });
   }
 };
 
