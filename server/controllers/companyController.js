@@ -105,17 +105,59 @@ export const postJob = async (req, res) => {
 
 //Company Data
 export const getCompanyData = async (req, res) => {
-  res.send("Company data");
+  try {
+    const company = req.company;
+    res.json({ success: true, company });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+//Get company post date jobs
+export const getCompanyPostedJobs = async (req, res) => {
+  try {
+    const companyId = req.company._id;
+    const jobs = await Job.find({ companyId });
+    //Todo: adding no of applicannts
+    res.json({
+      success: true,
+      jobsData: jobs,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
 };
 
 //Get all jobs applicants
 export const getCompanyJobApplicants = async (req, res) => {};
 
-//Get company post date jobs
-export const getCompanyPostedJobs = async (req, res) => {};
-
 //change job application status
-export const changeApllicationJobStatus = async (req, res) => {};
+export const changeApllicationJobStatus = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const companyId = req.company._id;
+    const job = await Job.findById(id);
+    if (companyId.toString() === job.companyId.toString()) {
+      job.visible = !job.visible;
+    }
+    await job.save();
+    res.json({
+      success: true,
+      job,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 //change job visibility
 export const changeJobVisibility = async (req, res) => {};
