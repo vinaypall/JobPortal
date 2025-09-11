@@ -21,7 +21,6 @@ router.post("/register", upload.single("image"), registerCompany);
 router.post("/login", loginCompany);
 
 //Post a job
-
 router.post("/post-job", protectCompany, postJob);
 
 //Company Data
