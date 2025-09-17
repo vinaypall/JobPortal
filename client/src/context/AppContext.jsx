@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { jobsData } from "../assets/assets";
 const AppContext = createContext();
 export const AppContextProvider = (props) => {
+  const backendurl = import.meta.env.VITE_BACKEND_URL;
+
   const [searchFilter, setSearchFilter] = useState({
     title: "",
     location: "",
@@ -15,6 +17,9 @@ export const AppContextProvider = (props) => {
   const fetchJobs = async () => {
     setJobs(jobsData);
   };
+
+  const [companyToken, setCompanyToken] = useState(null);
+  const [companyData, setCompanyData] = useState(null);
 
   useEffect(() => {
     fetchJobs();
@@ -29,6 +34,11 @@ export const AppContextProvider = (props) => {
     setJobs,
     showRecruiterLogin,
     setShowRecruiterLogin,
+    companyToken,
+    setCompanyToken,
+    companyData,
+    setCompanyData,
+    backendurl,
   };
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>

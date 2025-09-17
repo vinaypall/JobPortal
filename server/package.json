@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@clerk/express": "^1.7.31",
     "@sentry/node": "^10.10.0",
     "@vercel/node": "^5.3.21",
     "bcrypt": "^6.0.0",
