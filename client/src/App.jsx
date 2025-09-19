@@ -13,7 +13,7 @@ import "quill/dist/quill.snow.css";
 import { ToastContainer, toast } from "react-toastify";
 
 const App = () => {
-  const { showRecruiterLogin } = useContext(AppContext);
+  const { showRecruiterLogin, companyToken } = useContext(AppContext);
 
   return (
     <div>
@@ -24,9 +24,13 @@ const App = () => {
         <Route path="/apply-job/:id" element={<ApplyJob />} />
         <Route path="/applications" element={<Applications />} />
         <Route path="/dashboard" element={<Dashboard />}>
-          <Route path="add-job" element={<AddJobs />} />
-          <Route path="manage-job" element={<ManageJobs />} />
-          <Route path="view-applications" element={<ViewApplication />} />
+          {companyToken ? (
+            <>
+              <Route path="add-job" element={<AddJobs />} />
+              <Route path="manage-job" element={<ManageJobs />} />
+              <Route path="view-applications" element={<ViewApplication />} />
+            </>
+          ) : null}
         </Route>
       </Routes>
     </div>
